@@ -11,11 +11,24 @@ port = 50000
 s.connect((host, port))
 print("Connected to the server!")
 
-while True:
-    # Ask the user to enter their choice (up or down)
-    choice = input("Enter your choice (up or down): ")
-    # Send the choice to the server
-    s.send(choice.encode())
-    # Receive the result from the server
-    result = s.recv(1024).decode()
-    print(f"The result is: {result}")
+msg = s.recv(1024).decode() 
+print(msg)
+msg = s.recv(1024).decode() 
+print(msg)
+
+code = input()
+s.send(code.encode())
+msg = s.recv(1024).decode() 
+print(msg)
+if msg != "Invalid room code. Please try again":
+    while True:
+        choice = input("Enter your choice (up or down) or type 'quit' to exit: ")
+        if choice == "quit":
+            s.close()
+            break
+        else:
+            s.send(choice.encode())
+            result = s.recv(1024).decode()
+            print(f"The result is: {result}")
+
+s.close()
