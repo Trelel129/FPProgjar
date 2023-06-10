@@ -14,32 +14,47 @@ port = 12345
 s.connect((host, port))
 
 # Receive a welcome message from the server
-print(s.recv(1024).decode())
+msg = s.recv(1024).decode() 
+print(msg)
 
-# Define moves
-moves = ["semut", "orang", "gajah"]
+# Receive the prompt to enter a room code or create a new one
+msg = s.recv(1024).decode() 
+print(msg)
 
-# Start the game loop
-while True:
-    # Choose a move from the moves list
-    client_move = input("Choose your move: ")
+# Enter the room code or type ‘new’
+code = input()
 
-    # Check if the client wants to quit
-    if client_move == "quit":
-        break
+# Send the room code to the server
+s.send(code.encode())
 
-    # Send the client's move to the server
-    s.send(client_move.encode())
+# Receive the confirmation or error message from the server
+msg = s.recv(1024).decode() 
+print(msg)
 
-    # Receive the other player's move and the outcome from the server
-    data = s.recv(1024).decode()
+if msg != "Invalid room code. Please try again":
+    # Start the game loop
+    while True:
+        # Enter your move or type ‘quit’ to exit
+        move = input("Enter your move (semut, orang, gajah) or type ‘quit’ to exit: ")
 
-    # Check if the data is empty, which means the server has closed the connection
-    if not data:
-        break
+        # Send your move to the server
+        s.send(move.encode())
 
-    # Print the data
-    print(data)
+        # Check if you want to quit
+        if move == "quit":
+            # Close the connection
+            s.close()
+            break
 
-# Close the socket
+        # Receive the result of the game from the server
+        msg = s.recv(1024).decode()
+        print(msg)
+
+        # Check if the game is over
+        if msg == "Game over!":
+            # Close the connection
+            s.close()
+            break
+
+# Close the connection
 s.close()
