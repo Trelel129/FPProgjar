@@ -1,7 +1,8 @@
 Cara Bermain Hompimpa Python
 by Trelel129
 
-1. jalankan server.py pada terminal (dengan membuka terminal pada direktori server.py)
+1. jalankan server.py pada terminal (dengan membuka terminal pada direktori server.py)<br />
+   
    ![Alt text](image.png)
 
 2. buka terminal lain pada direktori yang sama, jalankan client.py
