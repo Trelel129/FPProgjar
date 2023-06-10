@@ -18,19 +18,19 @@ s.bind((host, port))
 s.listen(5)
 
 # Define moves
-moves = ["batu", "kertas", "gunting"]
+moves = ["semut", "orang", "gajah"]
 
 # Define outcomes
 outcomes = {
-    ("batu", "batu"): "draw",
-    ("batu", "kertas"): "anda kalah",
-    ("batu", "gunting"): "anda menang",
-    ("kertas", "batu"): "anda menang",
-    ("kertas", "kertas"): "draw",
-    ("kertas", "gunting"): "anda kalah",
-    ("gunting", "batu"): "anda kalah",
-    ("gunting", "kertas"): "anda menang",
-    ("gunting", "gunting"): "draw"
+    ("semut", "semut"): "draw",
+    ("semut", "orang"): "anda kalah",
+    ("semut", "gajah"): "anda menang",
+    ("orang", "semut"): "anda menang",
+    ("orang", "orang"): "draw",
+    ("orang", "gajah"): "anda kalah",
+    ("gajah", "semut"): "anda kalah",
+    ("gajah", "orang"): "anda menang",
+    ("gajah", "gajah"): "draw"
 }
 
 # Create a list to store the connected clients and their moves
@@ -43,7 +43,7 @@ for i in range(2):
     print("Got connection from", addr)
 
     # Send a welcome message to the client
-    c.send(("Welcome to gunting batu kertas! You are player " + str(i+1)).encode())
+    c.send(("Welcome to gajah semut orang! You are player " + str(i+1)).encode())
 
     # Append the client and its move to the list
     clients.append([c, None])
