@@ -1,5 +1,6 @@
-Cara Bermain Hompimpa Python <br />
+# Cara Bermain Hompimpa Python <br />
 by Kelompok 4 <br />
+<br />
 
 1. jalankan server.py pada terminal (dengan membuka terminal pada direktori server.py) <br />
    
