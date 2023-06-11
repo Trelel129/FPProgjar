@@ -1,4 +1,4 @@
-# Client side
+# Client side 
 import socket
 
 # Create a socket object
