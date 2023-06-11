@@ -52,8 +52,8 @@ print("Waiting for clients...")
 
 # Bind to the port
 s.bind((host, port))
-# Listen for up to 5 client connections
-s.listen(5)
+# Listen for up to 4 client connections
+s.listen(4)
 
 # A global list to store the choices and the client sockets
 choices = []

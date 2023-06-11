@@ -16,7 +16,7 @@ port = 12345
 s.bind((host, port))
 
 # Start listening for connections
-s.listen(5)
+s.listen(4)
 
 # Define moves
 moves = ["semut", "orang", "gajah"]
