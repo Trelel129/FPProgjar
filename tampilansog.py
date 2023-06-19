@@ -11,13 +11,19 @@ def update_countdown(count):
         root.after(1000, update_countdown, count - 1)
         x = random.randint(0, 2)
         y = random.randint(0, 2)
-        user1.config(image = image1[x])
-        tulisan1.config(text = tulisan[x])
-        
+        user1.config(image = image0[x])       
 
 
     else :
         countdown.config(text="Time's Up!") 
+        x = random.randint(0, 2)
+        y = random.randint(0, 2)
+        user1.config(image = image1[x])
+        tulisan1.config(text = tulisan[x])
+        # random choice if do not choose
+        if(tulisan2.cget("text") == "??"): 
+            user2.config(image = image2[y])
+            tulisan2.config(text = tulisan[y])
         Semut_button.config(state="disabled")
         Orang_button.config(state="disabled")
         Gajah_button.config(state="disabled")
@@ -81,8 +87,14 @@ Orang1 = ImageTk.PhotoImage(Image.open("aset/Orang.png").resize((300, 300)).rota
 Orang2 = ImageTk.PhotoImage(Image.open("aset/Orang.png").resize((300, 300)))
 Semut1 = ImageTk.PhotoImage(Image.open("aset/Semut.png").resize((300, 300)).rotate(180))
 Semut2 = ImageTk.PhotoImage(Image.open("aset/Semut.png").resize((300, 300)))
+
+GajahHilang = ImageTk.PhotoImage(Image.open("aset/Gajah hilang.png").resize((300, 300)).rotate(180))
+OrangHilang = ImageTk.PhotoImage(Image.open("aset/Orang hilang.png").resize((300, 300)).rotate(180))
+SemutHilang = ImageTk.PhotoImage(Image.open("aset/Semut hilang.png").resize((300, 300)).rotate(180))
+
 SOG1 = ImageTk.PhotoImage(Image.open("aset/Jari lengkap.png").resize((300, 300)).rotate(180))
 SOG2 = ImageTk.PhotoImage(Image.open("aset/Jari lengkap.png").resize((300, 300)))
+image0 = [GajahHilang, OrangHilang, SemutHilang]
 image1 = [Gajah1, Orang1, Semut1]
 image2 = [Gajah2, Orang2, Semut2]
 tulisan = ["Gajah", "Orang", "Semut"]
@@ -91,9 +103,8 @@ tulisan = ["Gajah", "Orang", "Semut"]
 user1 = Label(root, image=SOG1, background="#9b59b6")
 user2 = Label(root, image=SOG2, background="#9b59b6")
 
-tulisan1 = Label(root, text="Semut", font=100, bg="#9b59b6", fg="white" )
-tulisan2 = Label(root, text="Orang", font=100, bg="#9b59b6", fg="white" )
-tulisan3 = Label(root, text="Gajah", font=100, bg="#9b59b6", fg="white" )
+tulisan1 = Label(root, text="??", font=100, bg="#9b59b6", fg="white" )
+tulisan2 = Label(root, text="??", font=100, bg="#9b59b6", fg="white" )
 opponent = Label(root, text="OPPONENT", font=100, bg="#9b59b6", fg="white" )
 
 result = Label(root, text="", font=100, bg="#9b59b6", fg="white" )
