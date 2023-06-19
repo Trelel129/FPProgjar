@@ -11,7 +11,7 @@ def update_countdown(count):
         root.after(1000, update_countdown, count - 1)
         x = random.randint(0, 2)
         y = random.randint(0, 2)
-        user1.config(image = image0[x])       
+        user1.config(image = image0[x])
 
 
     else :
