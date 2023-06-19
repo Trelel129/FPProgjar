@@ -23,25 +23,25 @@ def update_countdown(count):
         Gajah_button.config(state="disabled")
         if(tulisan1.cget("text") == "Semut"):
             if(tulisan2.cget("text") == "Orang"):
-                result.config(text="Player 1 Menang!")
-            elif(tulisan2.cget("text") == "Gajah"):
                 result.config(text="Player 2 Menang!")
+            elif(tulisan2.cget("text") == "Gajah"):
+                result.config(text="Player 1 Menang!")
             else:
                 result.config(text="Seri!")
 
         elif(tulisan1.cget("text") == "Orang"):
             if(tulisan2.cget("text") == "Gajah"):
-                result.config(text="Player 1 Menang!")
-            elif(tulisan2.cget("text") == "Semut"):
                 result.config(text="Player 2 Menang!")
+            elif(tulisan2.cget("text") == "Semut"):
+                result.config(text="Player 1 Menang!")
             else:
                 result.config(text="Seri!")
 
         elif(tulisan1.cget("text") == "Gajah"):
             if(tulisan2.cget("text") == "Semut"):
-                result.config(text="Player 1 Menang!")
-            elif(tulisan2.cget("text") == "Orang"):
                 result.config(text="Player 2 Menang!")
+            elif(tulisan2.cget("text") == "Orang"):
+                result.config(text="Player 1 Menang!")
             else:
                 result.config(text="Seri!")
 
