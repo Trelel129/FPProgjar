@@ -5,9 +5,14 @@ import random
 
 def update_countdown(count):
     countdown.config(text=str(count)) 
-
+    x = random.randint(0, 2)
+    y = random.randint(0, 2)
     if count > 0:
         root.after(1000, update_countdown, count - 1)
+        x = random.randint(0, 2)
+        y = random.randint(0, 2)
+        user1.config(image = image1[x])
+        tulisan1.config(text = tulisan[x])
         
 
 
@@ -78,6 +83,10 @@ Semut1 = ImageTk.PhotoImage(Image.open("aset/Semut.png").resize((300, 300)).rota
 Semut2 = ImageTk.PhotoImage(Image.open("aset/Semut.png").resize((300, 300)))
 SOG1 = ImageTk.PhotoImage(Image.open("aset/Jari lengkap.png").resize((300, 300)).rotate(180))
 SOG2 = ImageTk.PhotoImage(Image.open("aset/Jari lengkap.png").resize((300, 300)))
+image1 = [Gajah1, Orang1, Semut1]
+image2 = [Gajah2, Orang2, Semut2]
+tulisan = ["Gajah", "Orang", "Semut"]
+
 
 user1 = Label(root, image=SOG1, background="#9b59b6")
 user2 = Label(root, image=SOG2, background="#9b59b6")
@@ -101,6 +110,7 @@ tulisan1.grid(row=3, column=5)
 countdown.grid(row = 4, column=5)
 tulisan2.grid(row=9, column=5)
 user2.grid(row=10, column=5)
+result.grid(row=12, column=5)
 Semut_button.grid(row=11, column=4)
 Orang_button.grid(row=11, column=5)
 Gajah_button.grid(row=11, column=6)
