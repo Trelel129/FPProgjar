@@ -12,10 +12,12 @@ def update_countdown(count):
         putih_button.config(state="disabled")
 
 def switch_to_putih1():
-    user2.config(image=putih1)  
+    user2.config(image=putih1) 
+    tulisan1.config(text="Putih") 
 
 def switch_to_hitam1():
     user2.config(image=hitam1)
+    tulisan1.config(text="Hitam") 
 
 def switch_to_putih2():
     user2.config(image=putih2)  
@@ -35,20 +37,25 @@ hitam1 = ImageTk.PhotoImage(Image.open("aset/Hitam.png").resize((300, 300)).rota
 putih2 = ImageTk.PhotoImage(Image.open("aset/Putih.png").resize((300, 300)))
 hitam2 = ImageTk.PhotoImage(Image.open("aset/Hitam.png").resize((300, 300)))
 
+user0 = Label(root, image=putih1, background="#9b59b6")
 user1 = Label(root, image=hitam1, background="#9b59b6")
 user2 = Label(root, image=putih2, background="#9b59b6")
 
+tulisan0 = Label(root, text="Putih", font=100, bg="#9b59b6", fg="white" )
 tulisan1 = Label(root, text="Hitam", font=100, bg="#9b59b6", fg="white" )
 tulisan2 = Label(root, text="Putih", font=100, bg="#9b59b6", fg="white" )
-opponent = Label(root, text="OPPONENT", font=100, bg="#9b59b6", fg="white" )
+opponent0 = Label(root, text="OPPONENT 1", font=100, bg="#9b59b6", fg="white" )
+opponent1 = Label(root, text="OPPONENT 2", font=100, bg="#9b59b6", fg="white" )
 
 countdown = Label(root, text="", font= 500, bg="#9b59b6", fg="black")
 
 hitam_button = Button(root, text="Hitam", command=switch_to_hitam2)
 putih_button = Button(root, text="Putih", command=switch_to_putih2)
 
-opponent.grid(row=1, column = 5)
-user1.grid(row=2, column=5)
+opponent0.grid(row=1, column = 4)
+opponent1.grid(row=1, column = 6)
+user0.grid(row=2, column=4)
+user1.grid(row=2, column=6)
 tulisan1.grid(row=3, column=5)
 countdown.grid(row = 4, column=5)
 tulisan2.grid(row=9, column=5)
