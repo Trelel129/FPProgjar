@@ -1,11 +1,23 @@
 from tkinter import *
 from PIL import Image, ImageTk
+import random
+
+counterputih = 0
+counterhitam = 0
+
 
 def update_countdown(count):
     countdown.config(text=str(count)) 
-
+    x = random.randint(0, 1)
+    y = random.randint(0, 1)
     if count > 0:
         root.after(1000, update_countdown, count - 1) 
+        x = random.randint(0, 1)
+        y = random.randint(0, 1)
+        user0.config(image = gambar[x])
+        tulisan0.config(text = tulisan[x] )
+        user1.config(image = gambar[y])
+        tulisan0.config(text = tulisan[y] )
     else :
         countdown.config(text="Time's Up!") 
         hitam_button.config(state="disabled")
@@ -32,10 +44,14 @@ root = Tk()
 root.title("Hompimpa")
 root.configure(background="#9b59b6")
 
+
+
 putih1 = ImageTk.PhotoImage(Image.open("aset/Putih.png").resize((300, 300)).rotate(180))
 hitam1 = ImageTk.PhotoImage(Image.open("aset/Hitam.png").resize((300, 300)).rotate(180))
 putih2 = ImageTk.PhotoImage(Image.open("aset/Putih.png").resize((300, 300)))
 hitam2 = ImageTk.PhotoImage(Image.open("aset/Hitam.png").resize((300, 300)))
+gambar = [putih1, hitam1]
+tulisan = ["putih", "hitam"]
 
 user0 = Label(root, image=putih1, background="#9b59b6")
 user1 = Label(root, image=hitam1, background="#9b59b6")
