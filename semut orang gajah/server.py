@@ -19,20 +19,20 @@ s.bind((host, port))
 s.listen(2)
 
 # Define moves
-moves = ["semut", "orang", "gajah"]
+moves = ["Semut", "Orang", "Gajah"]
 
 
 # Define outcomes
 outcomes = {
-    ("semut", "semut"): "draw",
-    ("semut", "orang"): "anda kalah",
-    ("semut", "gajah"): "anda menang",
-    ("orang", "semut"): "anda menang",
-    ("orang", "orang"): "draw",
-    ("orang", "gajah"): "anda kalah",
-    ("gajah", "semut"): "anda kalah",
-    ("gajah", "orang"): "anda menang",
-    ("gajah", "gajah"): "draw"
+    ("Semut", "Semut"): "draw",
+    ("Semut", "Orang"): "anda kalah",
+    ("Semut", "Gajah"): "anda menang",
+    ("Orang", "Semut"): "anda menang",
+    ("Orang", "Orang"): "draw",
+    ("Orang", "Gajah"): "anda kalah",
+    ("Gajah", "Semut"): "anda kalah",
+    ("Gajah", "Orang"): "anda menang",
+    ("Gajah", "Gajah"): "draw"
 }
 
 # Create a dictionary to store the room codes and the clients in each room
@@ -126,7 +126,7 @@ while True:
     print("Got connection from", addr)
 
     # Send a welcome message to the client
-    c.send(b"Welcome to gajah semut orang!")
+    c.send(b"Welcome to Gajah Semut Orang!")
 
     # Ask the client to enter a room code or create a new one
     c.send(b"Please enter a room code or type 'new' to create a new room")
