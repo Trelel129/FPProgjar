@@ -1,19 +1,7 @@
 from tkinter import *
 from PIL import Image, ImageTk
 import random
-import socket
 
-# Create a socket object
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-# Get local machine name
-host = socket.gethostname()
-
-# Reserve a port for your service
-port = 12345
-
-# Connect to the server
-s.connect((host, port))
 
 def update_countdown(count):
     countdown.config(text=str(count)) 
@@ -27,23 +15,11 @@ def update_countdown(count):
 
 
     else :
-        countdown.config(text="Time's Up!")
-        # recieve choice from server
-        code = s.recv(1024).decode('ascii')
-        tulisan1.config(text = code)
-        if(code == "Semut"):
-            user1.config(image = Semut1)
-            user1.config(text = Semut1)
-        elif(code == "Orang"):
-            user1.config(image = Orang1)
-            user1.config(text = Orang1)
-        elif(code == "Gajah"):
-            user1.config(image = Gajah1)
-            user1.config(text = Gajah1)
-        else:
-            user1.config(image = image1[x])
-            tulisan1.config(text = tulisan[x])
-
+        countdown.config(text="Time's Up!") 
+        x = random.randint(0, 2)
+        y = random.randint(0, 2)
+        user1.config(image = image1[x])
+        tulisan1.config(text = tulisan[x])
         # random choice if do not choose
         if(tulisan2.cget("text") == "??"): 
             user2.config(image = image2[y])
@@ -51,11 +27,6 @@ def update_countdown(count):
         Semut_button.config(state="disabled")
         Orang_button.config(state="disabled")
         Gajah_button.config(state="disabled")
-        
-        # send choice to server
-        code= tulisan2.cget("text")
-        s.send(code.encode('ascii'))
-
         if(tulisan1.cget("text") == "Semut"):
             if(tulisan2.cget("text") == "Orang"):
                 result.config(text="Player 2 Menang!")
@@ -109,28 +80,6 @@ def switch_to_Gajah2():
 root = Tk()
 root.title("Semut Orang Gajah")
 root.configure(background="#9b59b6")
-
-# form to get room number
-room = Entry(root, width=30, borderwidth=5)
-room.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
-
-# button to get room number
-room_button = Button(root, text="Enter Room Number", command=lambda: get_room(room.get()))
-room_button.grid(row=0, column=3, columnspan=3, padx=10, pady=10)
-
-# get room number
-def get_room(room):
-    room_label = Label(root, text=room)
-    room_label.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
-
-# send room number to server
-    s.send(room.encode('ascii'))
-
-# get player number
-    player = s.recv(1024)
-    player = player.decode('ascii')
-    player_label = Label(root, text=player)
-    player_label.grid(row=1, column=3, columnspan=3, padx=10, pady=10)
 
 Gajah1 = ImageTk.PhotoImage(Image.open("aset/Gajah.png").resize((300, 300)).rotate(180))
 Gajah2 = ImageTk.PhotoImage(Image.open("aset/Gajah.png").resize((300, 300)))
