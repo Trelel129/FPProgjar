@@ -30,7 +30,7 @@ class waiting(tk.Frame):
 
         # count number of player from list_player
         player_count = len(data['list_player'])
-        if player_count == 2:
+        if player_count == 4:
             root.start_game()
 
     def start_game(root):
