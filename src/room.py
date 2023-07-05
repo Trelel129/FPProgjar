@@ -7,7 +7,6 @@ class room(tk.Frame):
         super().__init__(master)
         root.menu_manager = menu_manager
         root.load_image()
-        # root.create_canvas()
         root.create_widgets()
 
     def load_image(root):

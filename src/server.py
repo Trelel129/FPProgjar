@@ -29,7 +29,6 @@ class Server:
         running = 1
         while running:
             inputready,outputready,exceptready = select.select(input,[],[])
-
             for s in inputready:
                 if s == root.server:
                     client_socket, client_address = root.server.accept()
@@ -63,25 +62,25 @@ class Client(threading.Thread):
             data = pickle.loads(data)
  
             if (data['command'] == "CREATE ROOM"):
-                room_id = data['room_id']
-                rooms[room_id] = {"num_players": [], "player_list": []}
-                rooms[room_id]["player_list"].append(data['name'])
-                print(f'{data["name"]} CREATE ROOM with room id: {room_id}')
+                id_room = data['id_room']
+                rooms[id_room] = {"num_players": [], "list_player": []}
+                rooms[id_room]["list_player"].append(data['name'])
+                print(f'{data["name"]} CREATE ROOM with room id: {id_room}')
 
             if (data['command'] == "JOIN ROOM"):
-                room_id = data['room_id']
-                if room_id in rooms:
-                    rooms[room_id]["player_list"].append(data['name'])
-                    print(f'{data["name"]} JOIN ROOM with id: {room_id}')
+                id_room = data['id_room']
+                if id_room in rooms:
+                    rooms[id_room]["list_player"].append(data['name'])
+                    print(f'{data["name"]} JOIN ROOM with id: {id_room}')
 
             if data['command'] == "CHECK ROOM":
-                room_id = data['room_id']
+                id_room = data['id_room']
                 
                 send_data = {
                     'status' : ''
                 }
 
-                if room_id in rooms:
+                if id_room in rooms:
                     send_data['status'] = 'EXIST'
                 else:
                     send_data['status'] = 'DOES NOT EXIST'
@@ -93,7 +92,7 @@ class Client(threading.Thread):
                     'status' : ''
                 }
 
-                if data['room_id'] in rooms:
+                if data['id_room'] in rooms:
                     send_data['status'] = 'ROOM ID EXIST'
                 else:
                     send_data['status'] = 'ROOM ID DOES NOT EXIST'

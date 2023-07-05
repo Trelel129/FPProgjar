@@ -18,7 +18,7 @@ class Main(tk.Tk):
         root.menus = {}
         root.socket = None
         root.name = None
-        root.room_id = None
+        root.id_room = None
         root.current_menu = None
         root.connect_to_server()
         root.create_menu_instances()

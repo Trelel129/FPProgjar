@@ -16,7 +16,6 @@ class CustomEntry(tk.Frame):
         root.entry_frame = tk.Frame(root, bd=2, relief=tk.SOLID)
         root.entry_frame.pack(fill=tk.BOTH, expand=True)
         root.entry_frame.bind("<Button-1>", lambda event: root.focus_set())
-
         root.entry_label = ttk.Label(root.entry_frame, style=root.style)
         root.entry_label.pack(fill=tk.BOTH, expand=True)
 
@@ -81,8 +80,7 @@ class createroom(tk.Frame):
         root.name_input_photo = ImageTk.PhotoImage(root.name_input_image)
         root.create_room_btn_photo = ImageTk.PhotoImage(root.create_room_btn_image)
         root.input_name_photo = ImageTk.PhotoImage(root.input_name_image)
-        root.back_btn_photo = ImageTk.PhotoImage(
-            root.back_btn_image)
+        root.back_btn_photo = ImageTk.PhotoImage(root.back_btn_image)
 
     def create_canvas(root):
         root.background_canvas = tk.Canvas(
@@ -109,52 +107,39 @@ class createroom(tk.Frame):
     def create_widgets(root):
         name_label = ttk.Label(root, text="Choose Username:")
         name_label.pack()
-
         root.name_entry = CustomEntry(root, style="Custom.TEntry")
         root.name_entry.pack()
-
-        player_label = ttk.Label(root, text="Number of Players:")
-        player_label.pack()
-
-        create_button = ttk.Button(
-            root, text="Create Room", command=root.create_room)
+        create_button = ttk.Button(root, text="Create Room", command=root.create_room)
         create_button.pack()
-
-        back_button = ttk.Button(
-            root, text="Back to Menu", command=root.menu_manager.show_main_menu)
+        back_button = ttk.Button(root, text="Back to Menu", command=root.menu_manager.show_main_menu)
         back_button.pack()
 
     def create_room(root):
         name = root.name_entry.get()
         players = 4
- 
         root.menu_manager.name = name
         print(f'Set player name to: {root.menu_manager.name}')
-
         room_id_check = True
         while room_id_check:
-            room_id = "".join(str(random.randint(0, 9)) for _ in range(6))
-            root.menu_manager.room_id = room_id
-            print(f'Set room id to: {root.menu_manager.room_id}')
-
+            id_room = "".join(str(random.randint(0, 9)) for _ in range(6))
+            root.menu_manager.id_room = id_room
+            print(f'Set room id to: {root.menu_manager.id_room}')
             send_data = {
-                'command' : "CHECK ROOM ID",
-                'room_id' : room_id,
+                'command' : "CHECK ROOM sID",
+                'id_room' : id_room,
                 'name': name
             }
 
             root.menu_manager.socket.send(pickle.dumps(send_data))
             print(f'Send data to server: {send_data}')
-
             data = root.menu_manager.socket.recv(2048)
             data = pickle.loads(data)
-
             if data['status'] == 'ROOM ID DOES NOT EXIST':
                 room_id_check = False
 
         send_data = {
             'command': "CREATE ROOM",
-            'room_id': room_id,
+            'id_room': id_room,
             'name': name,
             'players': players
         }

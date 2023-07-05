@@ -12,14 +12,14 @@ class waiting(tk.Frame):
         root.menu_manager = menu_manager
 
         root.room_code = tk.StringVar()
-        root.player_list = tk.StringVar()
+        root.list_player = tk.StringVar()
         
         root.create_widgets()
 
     def create_widgets(root):
         send_data = {
             'command' : "GET DETAIL ROOM",
-            'room_id' : root.menu_manager.room_id,
+            'id_room' : root.menu_manager.id_room,
             'name'    : root.menu_manager.name
         }
 
@@ -34,19 +34,13 @@ class waiting(tk.Frame):
         room_code_label = ttk.Label(root, text='Room Code: ')
         room_code_label.pack()
 
-        room_code_value = ttk.Label(root, text=root.menu_manager.room_id)
+        room_code_value = ttk.Label(root, text=root.menu_manager.id_room)
         room_code_value.pack()
         
-        num_player_label = ttk.Label(root, text="Number of Players:")
-        num_player_label.pack()
-
-        num_player_value = ttk.Label(root, text=data['num_players'])
-        num_player_value.pack()
-
         player_list_label = ttk.Label(root, text="Player List:")
         player_list_label.pack()
 
-        player_string = '\n'.join(data['player_list'])
+        player_string = '\n'.join(data['list_player'])
         player_list_value = ttk.Label(root, text=player_string)
         player_list_value.pack()
 
@@ -62,5 +56,5 @@ class waiting(tk.Frame):
         data = root.menu_manager.socket.recv(2048)
         data = pickle.loads(data)
 
-        player_string = '\n'.join('player_list')
+        player_string = '\n'.join('list_player')
         root.player_list_value.configure(text=player_string)

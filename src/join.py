@@ -99,12 +99,12 @@ class join(tk.Frame):
         root.menu_manager.name = name
         print(f'Set player name to: {root.menu_manager.name}')
 
-        root.menu_manager.room_id = room_code
-        print(f'Set room id to: {root.menu_manager.room_id}')
+        root.menu_manager.id_room = room_code
+        print(f'Set room id to: {root.menu_manager.id_room}')
 
         send_data = {
             'command': "CHECK ROOM",
-            'room_id': room_code,
+            'id_room': room_code,
             'name': name,
         }
 
@@ -119,7 +119,7 @@ class join(tk.Frame):
         else:
             send_data = {
                 'command': "JOIN ROOM",
-                'room_id': room_code,
+                'id_room': room_code,
                 'name': name,
             }
 
