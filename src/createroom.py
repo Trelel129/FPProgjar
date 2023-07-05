@@ -119,13 +119,13 @@ class createroom(tk.Frame):
         players = 4
         root.menu_manager.name = name
         print(f'Set player name to: {root.menu_manager.name}')
-        room_id_check = True
-        while room_id_check:
+        id_room_check = True
+        while id_room_check:
             id_room = "".join(str(random.randint(0, 9)) for _ in range(6))
             root.menu_manager.id_room = id_room
             print(f'Set room id to: {root.menu_manager.id_room}')
             send_data = {
-                'command' : "CHECK ROOM sID",
+                'command' : "CHECK ROOM ID",
                 'id_room' : id_room,
                 'name': name
             }
@@ -135,7 +135,7 @@ class createroom(tk.Frame):
             data = root.menu_manager.socket.recv(2048)
             data = pickle.loads(data)
             if data['status'] == 'ROOM ID DOES NOT EXIST':
-                room_id_check = False
+                id_room_check = False
 
         send_data = {
             'command': "CREATE ROOM",

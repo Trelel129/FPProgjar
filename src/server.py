@@ -65,6 +65,7 @@ class Client(threading.Thread):
                 id_room = data['id_room']
                 rooms[id_room] = {"num_players": [], "list_player": []}
                 rooms[id_room]["list_player"].append(data['name'])
+                rooms[id_room]["num_players"].append(data['players'])
                 print(f'{data["name"]} CREATE ROOM with room id: {id_room}')
 
             if (data['command'] == "JOIN ROOM"):
@@ -73,6 +74,11 @@ class Client(threading.Thread):
                     rooms[id_room]["list_player"].append(data['name'])
                     print(f'{data["name"]} JOIN ROOM with id: {id_room}')
 
+            if (data['command'] == "GET DETAIL ROOM"):
+                send_data = rooms[data['id_room']]
+                print(f'{data["name"]} GET DETAIL ROOM: {send_data}')
+                root.client.send(pickle.dumps(send_data))
+            
             if data['command'] == "CHECK ROOM":
                 id_room = data['id_room']
                 
