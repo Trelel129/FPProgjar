@@ -63,7 +63,6 @@ class createroom(tk.Frame):
             root.screen_width = 1400
             root.screen_height = 882
 
-        # Resize images based on screen resolution
         root.background_image = root.background_image.resize(
             (root.screen_width, root.screen_height), Image.ANTIALIAS)
         root.modal_create_room_image = root.modal_create_room_image.resize(
@@ -77,7 +76,6 @@ class createroom(tk.Frame):
         root.back_btn_image = root.back_btn_image.resize(
             (int(root.screen_width / 10), int(root.screen_height / 16)), Image.ANTIALIAS)
 
-        # Convert images to Tkinter PhotoImage objects
         root.background_photo = ImageTk.PhotoImage(root.background_image)
         root.modal_create_room_photo = ImageTk.PhotoImage(root.modal_create_room_image)
         root.name_input_photo = ImageTk.PhotoImage(root.name_input_image)
@@ -97,19 +95,16 @@ class createroom(tk.Frame):
         root.background_canvas.create_image(int(root.screen_width * 0.475), int(
             root.screen_height / 5), anchor=tk.NW, image=root.name_input_photo)
 
-       # Create input field
         root.name_entry = ttk.Entry(root.background_canvas)
         root.name_entry.place(x=int(root.screen_width * 0.46), y=int(root.screen_height / 4))
 
         create_button = ttk.Button(
             root.background_canvas, image=root.create_room_btn_photo, command=root.create_room)
-        create_button.place(x=int(root.screen_width * 0.45),
-                            y=int(root.screen_height * 0.6))
+        create_button.place(x=int(root.screen_width * 0.45), y=int(root.screen_height * 0.6))
 
         create_button = ttk.Button(
             root.background_canvas, image=root.back_btn_photo, command=root.menu_manager.show_main_menu)
-        create_button.place(x=int(root.screen_width * 0.45),
-                            y=int(root.screen_height * 0.7))
+        create_button.place(x=int(root.screen_width * 0.45), y=int(root.screen_height * 0.7))
 
     def create_widgets(root):
         name_label = ttk.Label(root, text="Choose Username:")

@@ -14,7 +14,6 @@ class join(tk.Frame):
         root.menu_manager = menu_manager
         root.load_image()
         root.create_canvas()
-        # root.create_widgets()
 
     def load_image(root):
         root.background_image = Image.open('aset/bg.png')
@@ -24,7 +23,6 @@ class join(tk.Frame):
         root.join_room_btn_image = Image.open('aset/join room.png')
         root.back_btn_image = Image.open('aset/back.png')
 
-        # Get screen resolution
         if platform.system() == "Windows":
             import ctypes
             user32 = ctypes.windll.user32
@@ -47,7 +45,6 @@ class join(tk.Frame):
         root.back_btn_image = root.back_btn_image.resize(
             (int(root.screen_width / 10), int(root.screen_height / 16)), Image.ANTIALIAS)
 
-        # Convert images to Tkinter PhotoImage objects
         root.background_photo = ImageTk.PhotoImage(root.background_image)
         root.modal_create_room_photo = ImageTk.PhotoImage(root.modal_create_room_image)
         root.name_input_photo = ImageTk.PhotoImage(root.name_input_image)
@@ -63,8 +60,6 @@ class join(tk.Frame):
         root.background_canvas.create_image(int(root.screen_width * 0.475), int(root.screen_height / 5), anchor=tk.NW, image=root.name_input_photo)
         root.background_canvas.create_image(int(root.screen_width * 0.475), int(root.screen_height / 3), anchor=tk.NW, image=root.room_code_photo)
 
-        
-       # Create input field
         root.name_entry = ttk.Entry(root.background_canvas)
         root.name_entry.place(x=int(root.screen_width * 0.46), y=int(root.screen_height / 4))
 
@@ -101,8 +96,6 @@ class join(tk.Frame):
     def join_room(root):
         name = root.name_entry.get()
         room_code = root.code_entry.get()
-        # Code for joining a room goes here
-        # You can update the window or perform any other actions
         root.menu_manager.name = name
         print(f'Set player name to: {root.menu_manager.name}')
 

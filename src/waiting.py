@@ -62,21 +62,5 @@ class waiting(tk.Frame):
         data = root.menu_manager.socket.recv(2048)
         data = pickle.loads(data)
 
-        # num_players = int(data['num_players'])
-        # if num_players == 4:
-        #     avatars = ['Werewolf', 'Seeker/Sheer', 'Villager', 'Villager']
-
-        # else:
-        #     print("Invalid number of players.")
-        #     return
-
-        # random.shuffle(avatars)
-
-        # # Perform start game logic with avatars here
-        # for i, player in enumerate(data['player_list']):
-        #     avatar = avatars[i]
-        #     print(f"Player: {player}, Avatar: {avatar}")
-
-        # Example: You can update the player list labels with avatars instead of names
         player_string = '\n'.join('player_list')
         root.player_list_value.configure(text=player_string)
