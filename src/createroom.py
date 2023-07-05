@@ -45,7 +45,7 @@ class createroom(tk.Frame):
         # root.create_widgets()
 
     def load_image(root):
-        root.background_image = Image.open('aset/bg.png')
+        root.background_image = Image.open('aset/awal.png')
         root.modal_create_room_image = Image.open('aset/button.png')
         root.name_input_image = Image.open('aset/Name.png')
         root.create_room_btn_image = Image.open('aset/create room.png')
@@ -65,7 +65,7 @@ class createroom(tk.Frame):
         root.background_image = root.background_image.resize(
             (root.screen_width, root.screen_height), Image.ANTIALIAS)
         root.modal_create_room_image = root.modal_create_room_image.resize(
-            (int(root.screen_width*0.4), int(root.screen_height*0.8)), Image.ANTIALIAS)
+            (int(root.screen_width*0.3), int(root.screen_height*0.5)), Image.ANTIALIAS)
         root.name_input_image = root.name_input_image.resize(
             (int(root.screen_width / 15), int(root.screen_height / 24)), Image.ANTIALIAS)
         root.create_room_btn_image = root.create_room_btn_image.resize(
@@ -83,26 +83,23 @@ class createroom(tk.Frame):
         root.back_btn_photo = ImageTk.PhotoImage(root.back_btn_image)
 
     def create_canvas(root):
-        root.background_canvas = tk.Canvas(
-            root, width=root.screen_width, height=root.screen_height)
+        root.background_canvas = tk.Canvas(root, width=root.screen_width, height=root.screen_height)
         root.background_canvas.pack()
-        root.background_canvas.create_image(
-            0, 0, anchor=tk.NW, image=root.background_photo)
-        root.background_canvas.create_image(int(root.screen_width * 0.3), int(
-            root.screen_height / 12), anchor=tk.NW, image=root.modal_create_room_photo)
+        root.background_canvas.create_image(0, 0, anchor=tk.NW, image=root.background_photo)
+        root.background_canvas.create_image(int(root.screen_width * 0.36), int(
+            root.screen_height / 5), anchor=tk.NW, image=root.modal_create_room_photo)
         root.background_canvas.create_image(int(root.screen_width * 0.475), int(
-            root.screen_height / 5), anchor=tk.NW, image=root.name_input_photo)
+            root.screen_height / 3.5), anchor=tk.NW, image=root.name_input_photo)
 
         root.name_entry = ttk.Entry(root.background_canvas)
-        root.name_entry.place(x=int(root.screen_width * 0.46), y=int(root.screen_height / 4))
+        root.name_entry.place(x=int(root.screen_width * 0.44), y=int(root.screen_height / 3))
 
-        create_button = ttk.Button(
-            root.background_canvas, image=root.create_room_btn_photo, command=root.create_room)
-        create_button.place(x=int(root.screen_width * 0.45), y=int(root.screen_height * 0.6))
+        create_button = ttk.Button(root.background_canvas, image=root.create_room_btn_photo, command=root.create_room)
+        create_button.place(x=int(root.screen_width * 0.45), y=int(root.screen_height * 0.45))
 
         create_button = ttk.Button(
             root.background_canvas, image=root.back_btn_photo, command=root.menu_manager.show_main_menu)
-        create_button.place(x=int(root.screen_width * 0.45), y=int(root.screen_height * 0.7))
+        create_button.place(x=int(root.screen_width * 0.45), y=int(root.screen_height * 0.55))
 
     def create_widgets(root):
         name_label = ttk.Label(root, text="Choose Username:")
