@@ -8,12 +8,6 @@ def currentTime():
     formattedTime = now.strftime("%H:%M:%S")
     return formattedTime
 
-def deleteLastLine():
-    cursorUp = "\x1b[1A"
-    eraseLine = "\x1b[2K"
-    sys.stdout.write(cursorUp)
-    sys.stdout.write(eraseLine)
-
 def send(sock):
     while threadFlag:
         try:
@@ -35,6 +29,12 @@ def receive(sock):
         except:
             print("An error occured while trying to reach the server!")
             break
+        
+def deleteLastLine():
+    cursorUp = "\x1b[1A"
+    eraseLine = "\x1b[2K"
+    sys.stdout.write(cursorUp)
+    sys.stdout.write(eraseLine)
 
 def main():
     global threadFlag

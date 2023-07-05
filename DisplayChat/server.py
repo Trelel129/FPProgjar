@@ -1,6 +1,23 @@
 import socket
 import select
 
+class Message:
+    def __init__(self, text):
+        self.text = text
+        self.next = None
+
+class MessageList:
+    def __init__(self):
+        self.head = None
+    
+    def add(self, text):
+        newMessage = Message(text)
+        if self.head is None:
+            self.head = newMessage
+        else:
+            newMessage.next = self.head
+            self.head = newMessage
+
 class Client:
     def __init__(self, name, connection):
         self.name = name
@@ -53,23 +70,6 @@ class ClientList:
                 return
             temp = temp.next
 
-class Message:
-    def __init__(self, text):
-        self.text = text
-        self.next = None
-
-class MessageList:
-    def __init__(self):
-        self.head = None
-    
-    def add(self, text):
-        newMessage = Message(text)
-        if self.head is None:
-            self.head = newMessage
-        else:
-            newMessage.next = self.head
-            self.head = newMessage
-
 class Server:
     def __init__(self):
         self.host = ""
@@ -82,11 +82,10 @@ class Server:
     def run(self):
         self.socket.listen()
         inputs = [self.socket]
-        outputs = []
         clientNumber = 0
         running = True
         while running:
-            readable, writeable, exceptional = select.select(inputs, outputs, inputs, 0.1)
+            readable, writeable, exceptional = select.select(inputs, [], inputs, 0.1)
             messageBuffer = MessageList()
             for s in readable:
                 if s is self.socket:
@@ -109,7 +108,6 @@ class Server:
                             s.send(response)
                         elif message.split(":")[0] == "message":
                             splitMessage = message.split(":")
-                            #message:bob:hello
                             messageBuffer.add(f"message:{splitMessage[1]}:{splitMessage[2]}")
                             client = self.clientList.head
                             while client is not None:
@@ -126,22 +124,8 @@ class Server:
                     message += f"{messageEntry.text}\n"
                     messageEntry = messageEntry.next
                 message = message.encode()
-
                 if s is not self.socket:
                     s.send(message)
-            
-            for s in exceptional:
-
-                client = self.clientList.getByConnection(s)
-                print(f"Lost connection with {client.name}")
-
-                if s in inputs:
-                    inputs.pop(inputs.index(s))
-                if s in outputs:
-                    outputs.pop(outputs.index(s))
-                s.close()
-
-                self.clientList.drop(client)
 
     def exit(self):
         pass

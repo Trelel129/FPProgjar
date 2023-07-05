@@ -20,14 +20,13 @@ class MessageList:
             newMessage.next = self.head
             self.head = newMessage
 
-
-class Label:
-    def __init__(self, text, font):
-        self.text = text
-        self.font = font
+# class Label:
+#     def __init__(self, text, font):
+#         self.text = text
+#         self.font = font
     
-    def draw(self, surface, x, y, color):
-        surface.blit(self.font.render(self.text, True, color), (x - 8, y - 15))
+#     def draw(self, surface, x, y, color):
+#         surface.blit(self.font.render(self.text, True, color), (x - 8, y - 15))
 
 class Rectangle:
     def __init__(self, topLeft, size):
