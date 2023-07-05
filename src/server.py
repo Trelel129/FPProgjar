@@ -10,14 +10,13 @@ players = {}
 
 class Server:
     def __init__(root):
+        root.threads = []
         root.host = 'localhost'
-        root.port = 5000
-        root.backlog = 5
+        root.port = 9000
+        root.backlog = 4
         root.size = 1024
         root.server = None
-        root.threads = []
-        print("-- Server Start --")
-
+        
     def open_socket(root):
         root.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         root.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -33,7 +32,6 @@ class Server:
 
             for s in inputready:
                 if s == root.server:
-                    # handle the server socket
                     client_socket, client_address = root.server.accept()
                     print(f"{client_address} connected to server")
                     client_sockets.append(client_socket)
@@ -41,11 +39,9 @@ class Server:
                     c.start()
                     root.threads.append(c)
                 elif s == sys.stdin:
-                    # handle standard input
                     junk = sys.stdin.readline()
                     running = 0
 
-	 # close all threads
         root.server.close()
         for c in root.threads:
             c.join()
@@ -69,22 +65,14 @@ class Client(threading.Thread):
             if (data['command'] == "CREATE ROOM"):
                 room_id = data['room_id']
                 rooms[room_id] = {"num_players": [], "player_list": []}
-                rooms[room_id]["num_players"].append(data['players'])
                 rooms[room_id]["player_list"].append(data['name'])
-                print(f'{data["name"]} CREATE ROOM with room id: {room_id} and num players: {data["players"]}')
-                print(f'ROOM Detail: {rooms}')
-
-            if (data['command'] == "GET DETAIL ROOM"):
-                send_data = rooms[data['room_id']]
-                print(f'{data["name"]} GET DETAIL ROOM: {send_data}')
-                root.client.send(pickle.dumps(send_data))
+                print(f'{data["name"]} CREATE ROOM with room id: {room_id}')
 
             if (data['command'] == "JOIN ROOM"):
                 room_id = data['room_id']
                 if room_id in rooms:
                     rooms[room_id]["player_list"].append(data['name'])
                     print(f'{data["name"]} JOIN ROOM with id: {room_id}')
-                    print(f'ROOM Detail: {rooms}')
 
             if data['command'] == "CHECK ROOM":
                 room_id = data['room_id']

@@ -19,22 +19,18 @@ class Main(tk.Tk):
         root.socket = None
         root.name = None
         root.room_id = None
+        root.current_menu = None
         root.connect_to_server()
         root.create_menu_instances()
-        root.current_menu = None
         root.show_main_menu()
         root.configure_style()
 
     def connect_to_server(root):
         try:
-            # Update with the server address and port
-            server_address = ('localhost', 5000)
+            server_address = ('localhost', 9000)
             root.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             root.socket.connect(server_address)
-            # Perform any other actions with the connected socket if needed
-            print("Connect to server")
         except ConnectionError:
-            # Handle connection error
             pass
 
     def create_menu_instances(root):
@@ -42,13 +38,12 @@ class Main(tk.Tk):
         root.menus["play"] = menu(root, root)
         root.menus["create"] = createroom(root, root)
         root.menus["join"] = join(root, root)
-        # root.menus["sog"] = sog(root, root)
 
     def configure_style(root):
         style = ttk.Style()
-        style.configure('TButton', font=('Arial', 12))
-        style.configure('TLabel', font=('Arial', 12))
-        style.configure('TEntry', font=('Arial', 12))
+        style.configure('TButton', font=('Times New Roman', 12))
+        style.configure('TLabel', font=('Times New Roman', 12))
+        style.configure('TEntry', font=('Times New Roman', 12))
 
     def show_main_menu(root):
         root.show_menu("main")

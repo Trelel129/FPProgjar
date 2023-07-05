@@ -50,7 +50,7 @@ class createroom(tk.Frame):
         root.modal_create_room_image = Image.open('aset/button.png')
         root.name_input_image = Image.open('aset/Name.png')
         root.create_room_btn_image = Image.open('aset/create room.png')
-        root.input_name_image = Image.open('aset/Input Name.png')
+        root.input_name_image = Image.open('aset/input.png')
         root.back_btn_image = Image.open('aset/back.png')
 
         # ukuran layar
