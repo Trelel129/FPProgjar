@@ -5,6 +5,8 @@ import subprocess
 import random
 from PIL import Image, ImageTk
 import platform
+import threading
+import time
 
 from room import room
 
@@ -17,7 +19,8 @@ class waiting(tk.Frame):
         root.load_image()
         root.create_canvas()
         root.create_widgets()
-        root.count_player()
+        root.start_player_count_update()
+        root.game_started = False
     
     def load_image(root):
         root.background_image = Image.open('aset/waiting.png')
@@ -48,22 +51,54 @@ class waiting(tk.Frame):
         room_label = ttk.Label(self.background_canvas, text="Send the code to play with others!", font=("Arial", 16),  foreground="blue", background="")
         room_label.place(x=self.screen_width // 2, y=self.screen_height // 4 + 80, anchor=tk.CENTER)
 
-    def count_player(root):
-        send_data = {
-            'command' : "GET DETAIL ROOM",
-            'id_room' : root.menu_manager.id_room,
-            'name'    : root.menu_manager.name
-        }
+        player_count_label = ttk.Label(self.background_canvas, textvariable=self.list_player, font=("Arial", 16, "bold"), foreground="blue", background="")
+        player_count_label.place(x=self.screen_width // 2, y=self.screen_height // 4 + 120, anchor=tk.CENTER)
 
-        root.menu_manager.socket.send(pickle.dumps(send_data))
+    # def count_player(root):
+    #     send_data = {
+    #         'command' : "GET DETAIL ROOM",
+    #         'id_room' : root.menu_manager.id_room,
+    #         'name'    : root.menu_manager.name
+    #     }
 
-        data = root.menu_manager.socket.recv(2048)
-        data = pickle.loads(data)
+    #     root.menu_manager.socket.send(pickle.dumps(send_data))
 
-        # count number of player from list_player
-        player_count = len(data['list_player'])
-        if player_count == 2:
-            root.start_game()
+    #     data = root.menu_manager.socket.recv(2048)
+    #     data = pickle.loads(data)
+
+    #     # count number of player from list_player
+    #     player_count = len(data['list_player'])
+    #     root.list_player.set(f"{player_count}/3 people joined")
+    #     if player_count == 3:
+    #         root.start_game()
+    def start_player_count_update(root):
+        player_count_thread = threading.Thread(target=root.update_player_count)
+        player_count_thread.daemon = True 
+        player_count_thread.start()
+
+    def update_player_count(root):
+        while True:
+            send_data = {
+                'command': "GET DETAIL ROOM",
+                'id_room': root.menu_manager.id_room,
+                'name': root.menu_manager.name
+            }
+
+            root.menu_manager.socket.send(pickle.dumps(send_data))
+
+            data = root.menu_manager.socket.recv(2048)
+            data = pickle.loads(data)
+
+            player_count = len(data['list_player'])
+            root.list_player.set(f"{player_count}/3 people has joined")
+
+            if player_count == 3 and not root.game_started:
+                root.game_started = True
+                root.start_game()
+
+            # Wait for a certain period before checking the player count again
+            time.sleep(1)  # Adjust the sleep duration as needed
+
 
     def start_game(root):
         subprocess.call(["python3", "tampilan.py"])

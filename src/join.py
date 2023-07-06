@@ -127,5 +127,5 @@ class join(tk.Frame):
             print(f'Send data to server: {send_data}')
 
             root.menu_manager.menus["waiting_room"] = waiting(
-                root.menu_manager, root.menu_manager)
+                root.menu_manager, root.menu_manager, room_code)
             root.menu_manager.show_menu("waiting_room")
