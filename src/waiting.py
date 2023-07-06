@@ -62,8 +62,11 @@ class waiting(tk.Frame):
 
         # count number of player from list_player
         player_count = len(data['list_player'])
-        if player_count == 2:
+        if player_count == 3:
             root.start_game()
+            
+        else:
+            print(f'Send data to server: player count = {player_count}')
 
     def start_game(root):
-        subprocess.call(["python3", "tampilan.py"])
+        subprocess.call(["python", "tampilan.py"])
