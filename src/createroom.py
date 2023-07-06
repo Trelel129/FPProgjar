@@ -113,7 +113,7 @@ class createroom(tk.Frame):
 
     def create_room(root):
         name = root.name_entry.get()
-        players = 4
+        players = 3
         root.menu_manager.name = name
         print(f'Set player name to: {root.menu_manager.name}')
         id_room_check = True
@@ -145,5 +145,5 @@ class createroom(tk.Frame):
         print(f'Send data to server: {send_data}')
 
         root.menu_manager.menus["waiting_room"] = waiting(
-            root.menu_manager, root.menu_manager)
+            root.menu_manager, root.menu_manager, id_room)
         root.menu_manager.show_menu("waiting_room")

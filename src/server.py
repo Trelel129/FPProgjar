@@ -13,7 +13,7 @@ class Server:
         root.threads = []
         root.host = 'localhost'
         root.port = 9000
-        root.backlog = 4
+        root.backlog = 3
         root.size = 1024
         root.server = None
         
