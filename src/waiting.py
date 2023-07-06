@@ -9,6 +9,7 @@ import threading
 import time
 
 from room import room
+from countdown import CountdownWindow
 
 class waiting(tk.Frame):
     def __init__(root, master, menu_manager, room_code):
@@ -21,6 +22,7 @@ class waiting(tk.Frame):
         root.create_widgets()
         root.start_player_count_update()
         root.game_started = False
+        root.countdown_window = None
     
     def load_image(root):
         root.background_image = Image.open('aset/waiting.png')
@@ -53,6 +55,9 @@ class waiting(tk.Frame):
 
         player_count_label = ttk.Label(self.background_canvas, textvariable=self.list_player, font=("Arial", 16, "bold"), foreground="blue", background="")
         player_count_label.place(x=self.screen_width // 2, y=self.screen_height // 4 + 120, anchor=tk.CENTER)
+
+        player_count_label = ttk.Label(self.background_canvas, text="Players:", font=("Arial", 16, "bold"), foreground="blue", background="")
+        player_count_label.place(x=self.screen_width // 2, y=self.screen_height // 4 + 360, anchor=tk.CENTER)
 
     # def count_player(root):
     #     send_data = {
@@ -92,13 +97,23 @@ class waiting(tk.Frame):
             player_count = len(data['list_player'])
             root.list_player.set(f"{player_count}/3 people has joined")
 
+            player_names = ", ".join(data['list_player'])  
+            player_names_label = ttk.Label(root.background_canvas, text=player_names, font=("Arial", 14), foreground="blue", background="")
+            player_names_label.place(x=root.screen_width // 2, y=root.screen_height // 4 + 400, anchor=tk.CENTER)
+
             if player_count == 3 and not root.game_started:
                 root.game_started = True
                 root.start_game()
 
-            # Wait for a certain period before checking the player count again
-            time.sleep(1)  # Adjust the sleep duration as needed
+            time.sleep(1)  
 
 
-    def start_game(root):
+    def start_game(self):
+        self.countdown_window = CountdownWindow(self.master, 3)
+        self.countdown_window.protocol("WM_DELETE_WINDOW", self.countdown_window.destroy)  
+
+        self.countdown_window.after(3000, self.open_tampilan)  
+
+    def open_tampilan(self):
+        self.countdown_window.destroy()
         subprocess.call(["python3", "tampilan.py"])
