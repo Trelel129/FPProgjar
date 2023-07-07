@@ -1,20 +1,6 @@
 from tkinter import *
 from PIL import Image, ImageTk
 import random
-import socket
-
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = socket.gethostname()
-port = 12345
-s.connect((host, port))
-# Receive a welcome message from the server
-msg = s.recv(1024).decode() 
-print(msg)
-
-# Receive the prompt to enter a room code or create a new one
-msg = s.recv(1024).decode() 
-print(msg)
-
 
 
 def update_countdown(count):
@@ -38,21 +24,33 @@ def update_countdown(count):
         if(tulisan2.cget("text") == "??"): 
             user2.config(image = image2[y])
             tulisan2.config(text = tulisan[y])
-        
-        elif(tulisan2.cget("text") == "Semut"):
-            s.send("Semut".encode())
-
-        elif(tulisan2.cget("text") == "Orang"):
-            s.send("Orang".encode())
-
-        elif(tulisan2.cget("text") == "Gajah"):
-            s.send("Gajah".encode())
-        
         Semut_button.config(state="disabled")
         Orang_button.config(state="disabled")
         Gajah_button.config(state="disabled")
-        recv = s.recv(1024).decode()
-        result.config(text=recv)
+        if(tulisan1.cget("text") == "Semut"):
+            if(tulisan2.cget("text") == "Orang"):
+                result.config(text="Player 2 Menang!")
+            elif(tulisan2.cget("text") == "Gajah"):
+                result.config(text="Player 1 Menang!")
+            else:
+                result.config(text="Seri!")
+
+        elif(tulisan1.cget("text") == "Orang"):
+            if(tulisan2.cget("text") == "Gajah"):
+                result.config(text="Player 2 Menang!")
+            elif(tulisan2.cget("text") == "Semut"):
+                result.config(text="Player 1 Menang!")
+            else:
+                result.config(text="Seri!")
+
+        elif(tulisan1.cget("text") == "Gajah"):
+            if(tulisan2.cget("text") == "Semut"):
+                result.config(text="Player 2 Menang!")
+            elif(tulisan2.cget("text") == "Orang"):
+                result.config(text="Player 1 Menang!")
+            else:
+                result.config(text="Seri!")
+
 
 def switch_to_Semut1():
     user1.config(image=Semut1)
@@ -78,38 +76,6 @@ def switch_to_Gajah2():
     user2.config(image=Gajah2)
     tulisan2.config(text="Gajah")
 
-def create_room():
-    s.send("create".encode())
-    msg = s.recv(1024).decode() 
-    print(msg)
-    room_code_label.config(text="Room Code: ")
-    room_code_entry.config(text=msg, state="disabled")
-    createroom_button.config(state="disabled")
-    countdown.config(text="10")
-    Semut_button.config(state="normal")
-    Orang_button.config(state="normal")
-    Gajah_button.config(state="normal")
-    result.config(text="")
-    if(s.recv(1024).decode() == "Start"):
-        update_countdown(10)
-
-def confirm_room():
-    s.send("join".encode())
-    room_code = room_code_entry.get()
-    s.send(room_code.encode())
-    msg = s.recv(1024).decode() 
-    print(msg)
-    if(msg != "Invalid room code. Please try again"):
-        room_code_entry.config(state="disabled")
-        join_button.config(state="disabled")
-        room_code_label.config(text="Room Code: " + room_code)
-        update_countdown(10)
-        Semut_button.config(state="normal")
-        Orang_button.config(state="normal")
-        Gajah_button.config(state="normal")
-        result.config(text="")
-
-
 #basenya
 root = Tk()
 root.title("Semut Orang Gajah")
@@ -133,7 +99,6 @@ image1 = [Gajah1, Orang1, Semut1]
 image2 = [Gajah2, Orang2, Semut2]
 tulisan = ["Gajah", "Orang", "Semut"]
 
-room_code_entry = Entry(root, width=10, font=100)
 
 user1 = Label(root, image=SOG1, background="#9b59b6")
 user2 = Label(root, image=SOG2, background="#9b59b6")
@@ -141,7 +106,6 @@ user2 = Label(root, image=SOG2, background="#9b59b6")
 tulisan1 = Label(root, text="??", font=100, bg="#9b59b6", fg="white" )
 tulisan2 = Label(root, text="??", font=100, bg="#9b59b6", fg="white" )
 opponent = Label(root, text="OPPONENT", font=100, bg="#9b59b6", fg="white" )
-room_code_label = Label(root, text="Room Code: ", font=100, bg="#9b59b6", fg="white" )
 
 result = Label(root, text="", font=100, bg="#9b59b6", fg="white" )
 
@@ -150,14 +114,8 @@ countdown = Label(root, text="", font= 500, bg="#9b59b6", fg="black")
 Semut_button = Button(root, text="Semut", font=100, bg="#9b59b6", fg="white", command=switch_to_Semut2)
 Orang_button = Button(root, text="Orang", font=100, bg="#9b59b6", fg="white", command=switch_to_Orang2)
 Gajah_button = Button(root, text="Gajah", font=100, bg="#9b59b6", fg="white", command=switch_to_Gajah2)
-createroom_button = Button(root, text="Create", font=100, bg="#9b59b6", fg="white", command=create_room)
-join_button = Button(root, text="Join", font=100, bg="#9b59b6", fg="white", command=confirm_room) 
 
 opponent.grid(row=1, column = 5)
-createroom_button.grid(row=0, column=5)
-room_code_entry.grid(row=0, column=8)
-room_code_label.grid(row=0, column=7)
-join_button.grid(row=0, column=9)
 user1.grid(row=2, column=5)
 tulisan1.grid(row=3, column=5)
 countdown.grid(row = 4, column=5)
@@ -168,4 +126,5 @@ Semut_button.grid(row=11, column=4)
 Orang_button.grid(row=11, column=5)
 Gajah_button.grid(row=11, column=6)
 
+update_countdown(10)
 root.mainloop()

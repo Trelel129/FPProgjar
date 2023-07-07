@@ -78,6 +78,7 @@ def game_room(code):
 
         # Check if there are still two clients in that room
         if len(clients) == 2:
+            c.send(b"Start")
             # Get the moves of both clients in that room
             move1 = clients[0][1]
             move2 = clients[1][1]
@@ -96,8 +97,8 @@ def game_room(code):
                     outcome2 = "anda menang"
 
                 # Send the moves and outcomes to both clients in that room
-                clients[0][0].send((move2 + "\n" + outcome1).encode())
-                clients[1][0].send((move1 + "\n" + outcome2).encode())
+                clients[0][0].send(("Anda: "+ move1 +"\nLawan: " + move2 + "\n" + outcome1).encode())
+                clients[1][0].send(("Anda: "+ move2 +"\nLawan: " + move1 + "\n" + outcome2).encode())
 
                 # Reset the moves of both clients in the list of clients in that room
                 clients[0][1] = None
